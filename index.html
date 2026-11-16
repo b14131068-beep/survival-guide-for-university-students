@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4ecd9">
+  <meta name="description" content="大學生生存圖鑑：收錄成大學長姐的校園生活、飲食、學業與省錢情報。">
+  <title>大學生生存圖鑑｜非官方校園求生指南</title>
+  <style>
+    :root {
+      --paper: #f4ecd9;
+      --paper-light: #fffaf0;
+      --ink: #171717;
+      --muted: #6d6659;
+      --yellow: #ffe34f;
+      --orange: #ff8b35;
+      --red: #e75b43;
+      --green: #b8d7a3;
+      --line: 3px solid var(--ink);
+      --shadow: 5px 5px 0 var(--ink);
+      --shadow-small: 3px 3px 0 var(--ink);
+      --radius: 5px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(rgba(23,23,23,.09) .65px, transparent .65px);
+      background-size: 7px 7px;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 3px dashed var(--red);
+      outline-offset: 4px;
+    }
+    .wrap { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font: 800 .76rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .09em; text-transform: uppercase;
+    }
+    .pixel { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .top-strip {
+      border-bottom: var(--line); background: var(--yellow);
+      padding: 7px 14px; text-align: center;
+      font-size: .76rem; font-weight: 900; letter-spacing: .08em;
+    }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(244,236,217,.96);
+      border-bottom: var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .nav {
+      min-height: 78px; display: flex; align-items: center;
+      justify-content: space-between; gap: 18px; padding: 12px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; min-width: 220px; }
+    .brand-mark {
+      width: 45px; height: 45px; display: grid; place-items: center;
+      background: var(--yellow); border: var(--line); box-shadow: var(--shadow-small);
+      font-size: 1.55rem; transform: rotate(-3deg);
+    }
+    .brand-name { font-size: 1.08rem; line-height: 1.15; font-weight: 1000; letter-spacing: -.04em; }
+    .brand-sub { display: block; margin-top: 4px; color: var(--muted); font: 700 .62rem ui-monospace, monospace; letter-spacing: .07em; }
+    .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 9px; flex-wrap: wrap; }
+    .nav-cats { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-btn, .random-btn, .primary-btn, .secondary-btn {
+      border: 2px solid var(--ink); border-radius: 3px; cursor: pointer;
+      font-weight: 900; transition: transform .15s, box-shadow .15s, background .15s;
+    }
+    .nav-btn { padding: 7px 10px; background: var(--paper-light); font-size: .8rem; }
+    .nav-btn:hover, .nav-btn.active { background: var(--yellow); box-shadow: 2px 2px 0 var(--ink); transform: translate(-1px,-1px); }
+    .random-btn { padding: 9px 12px; background: var(--ink); color: white; font-size: .82rem; box-shadow: 3px 3px 0 var(--orange); }
+    .random-btn:hover, .primary-btn:hover, .secondary-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+    .menu-toggle { display: none; border: var(--line); background: var(--yellow); padding: 7px 10px; font-weight: 900; }
+
+    .hero { padding: 54px 0 32px; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 30px; align-items: center; }
+    .hero-kicker { display: inline-block; padding: 5px 9px; background: var(--orange); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); font-size: .75rem; font-weight: 1000; transform: rotate(-1deg); }
+    h1 { margin: 18px 0 12px; max-width: 720px; font-size: clamp(2.8rem, 7vw, 5.8rem); line-height: .99; letter-spacing: -.075em; font-weight: 1000; }
+    h1 .highlight { position: relative; z-index: 0; white-space: nowrap; }
+    h1 .highlight::after { content: ""; position: absolute; z-index: -1; left: -3px; right: -3px; bottom: 4px; height: 32%; background: var(--yellow); transform: rotate(-1deg); }
+    .hero-copy { max-width: 620px; color: #49443b; font-size: 1.02rem; font-weight: 600; }
+    .hero-copy strong { color: var(--ink); }
+    .hero-art {
+      min-height: 270px; position: relative; display: grid; place-items: center;
+      border: var(--line); background: var(--yellow); box-shadow: 9px 9px 0 var(--ink);
+      overflow: hidden; transform: rotate(1deg);
+    }
+    .hero-art::before, .hero-art::after { content: ""; position: absolute; border: 2px solid var(--ink); border-radius: 50%; opacity: .18; }
+    .hero-art::before { width: 260px; height: 260px; }
+    .hero-art::after { width: 190px; height: 190px; }
+    .hero-emoji { position: relative; z-index: 1; font-size: clamp(6rem, 13vw, 9rem); filter: drop-shadow(5px 5px 0 rgba(23,23,23,.2)); }
+    .art-label { position: absolute; z-index: 2; bottom: 13px; right: 13px; padding: 5px 8px; border: 2px solid var(--ink); background: var(--paper-light); font: 900 .68rem ui-monospace, monospace; transform: rotate(-3deg); }
+    .hero-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 23px; }
+    .stat { border: 2px solid var(--ink); background: var(--paper-light); padding: 7px 11px; box-shadow: 3px 3px 0 var(--ink); font-size: .78rem; font-weight: 900; }
+    .stat b { color: #a33a24; }
+
+    .alert {
+      margin: 16px 0 36px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 17px 20px; border: var(--line); background: var(--yellow); box-shadow: var(--shadow);
+    }
+    .alert-left { display: flex; align-items: center; gap: 13px; }
+    .alert-icon { font-size: 2rem; }
+    .alert h2 { margin: 0; font-size: 1.15rem; line-height: 1.25; }
+    .alert p { margin: 3px 0 0; font-size: .83rem; font-weight: 600; }
+    .alert-tag { flex-shrink: 0; padding: 5px 8px; background: var(--red); border: 2px solid var(--ink); color: white; font: 900 .7rem ui-monospace, monospace; transform: rotate(2deg); }
+
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 15px; margin: 45px 0 17px; }
+    .section-head h2 { margin: 0; font-size: clamp(1.55rem, 4vw, 2.2rem); line-height: 1; letter-spacing: -.06em; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); font-size: .82rem; font-weight: 650; }
+    .section-index { font: 900 .78rem ui-monospace, monospace; background: var(--ink); color: var(--yellow); padding: 6px 9px; }
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 20px 0 18px; }
+    .search-box { flex: 1; max-width: 520px; display: flex; align-items: center; gap: 10px; padding: 11px 13px; background: var(--paper-light); border: var(--line); box-shadow: var(--shadow-small); }
+    .search-box span { font-size: 1.15rem; }
+    .search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-weight: 700; min-width: 0; }
+    .search-box input::placeholder { color: #918979; }
+    .result-count { font: 800 .76rem ui-monospace, monospace; color: var(--muted); white-space: nowrap; }
+
+    .category-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 21px; }
+    .category-chip { display: inline-flex; align-items: center; gap: 6px; border: 2px solid var(--ink); background: var(--paper-light); padding: 7px 12px; cursor: pointer; font-size: .8rem; font-weight: 900; }
+    .category-chip.active { background: var(--yellow); box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px,-1px); }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .card {
+      display: flex; flex-direction: column; min-height: 245px; padding: 17px;
+      border: var(--line); background: var(--paper-light); box-shadow: var(--shadow);
+      cursor: pointer; text-align: left; color: var(--ink); position: relative;
+      transition: transform .16s, box-shadow .16s;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--ink); }
+    .card-top { display: flex; justify-content: space-between; align-items: start; gap: 8px; }
+    .category-label { display: inline-block; padding: 4px 7px; border: 1.7px solid var(--ink); background: var(--yellow); font-size: .7rem; font-weight: 1000; }
+    .card-icon { font-size: 1.55rem; line-height: 1; }
+    .ratings { display: grid; gap: 4px; margin: 16px 0 11px; font-size: .7rem; font-weight: 800; }
+    .rating-line { display: flex; gap: 7px; align-items: center; }
+    .rating-name { color: var(--muted); min-width: 57px; }
+    .stars { color: #b77a00; letter-spacing: .06em; font-size: .82rem; }
+    .card h3 { margin: 0 0 7px; font-size: 1.24rem; line-height: 1.25; letter-spacing: -.04em; }
+    .card-summary { margin: 0; color: #5d574d; font-size: .85rem; font-weight: 600; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: auto; padding-top: 17px; }
+    .author { color: var(--muted); font-size: .68rem; font-weight: 800; }
+    .read-more { font: 900 .7rem ui-monospace, monospace; text-decoration: underline; text-underline-offset: 3px; }
+    .empty-state { grid-column: 1/-1; padding: 45px 20px; border: var(--line); background: var(--paper-light); text-align: center; box-shadow: var(--shadow); }
+    .empty-state .big { font-size: 2.5rem; }
+    .empty-state h3 { margin: 5px 0; }
+    .empty-state p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+    .submit-band { margin: 60px 0 50px; padding: 26px; border: var(--line); background: var(--orange); box-shadow: 7px 7px 0 var(--ink); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .submit-band h2 { margin: 0; font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: -.05em; }
+    .submit-band p { margin: 4px 0 0; font-size: .85rem; font-weight: 650; }
+    .primary-btn { display: inline-block; padding: 11px 15px; background: var(--ink); color: white; text-decoration: none; white-space: nowrap; box-shadow: 3px 3px 0 white; font-size: .85rem; }
+    footer { border-top: var(--line); background: #e8dec8; padding: 25px 0 30px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+    .footer-title { font-weight: 1000; font-size: 1.05rem; }
+    .disclaimer { margin: 5px 0 0; color: #5d574d; font-size: .78rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 15px; font-size: .8rem; font-weight: 900; }
+    .footer-links a { text-underline-offset: 3px; }
+    .copyright { margin-top: 22px; padding-top: 12px; border-top: 1px dashed #918979; color: #777064; font: .67rem ui-monospace, monospace; }
+
+    /* Modal */
+    .modal-backdrop { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(17,17,17,.68); }
+    .modal-backdrop.open { display: flex; }
+    .modal { width: min(650px, 100%); max-height: min(85vh, 800px); overflow: auto; padding: 23px; border: 4px solid var(--ink); background: var(--paper); box-shadow: 9px 9px 0 var(--yellow); position: relative; animation: pop .18s ease-out; }
+    @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
+    .modal-head { display: flex; justify-content: space-between; align-items: start; gap: 15px; }
+    .modal h2 { margin: 13px 0 9px; font-size: clamp(1.65rem, 5vw, 2.35rem); line-height: 1.15; letter-spacing: -.05em; }
+    .close-btn { flex-shrink: 0; width: 38px; height: 38px; border: 2px solid var(--ink); background: var(--yellow); font-size: 1.25rem; font-weight: 1000; cursor: pointer; }
+    .modal-ratings { display: flex; flex-wrap: wrap; gap: 15px; padding: 12px 0; border-top: 1px dashed #8f8778; border-bottom: 1px dashed #8f8778; font-size: .78rem; font-weight: 900; }
+    .modal-content { white-space: pre-line; color: #39352e; font-size: .96rem; line-height: 1.9; margin: 18px 0; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { padding: 3px 7px; border: 1px solid var(--ink); background: var(--paper-light); font-size: .7rem; font-weight: 800; }
+    .modal-author { margin-top: 17px; color: var(--muted); font-size: .75rem; font-weight: 900; }
+
+    /* Random draw */
+    .draw-card-wrap { perspective: 900px; width: min(360px, 100%); margin: 20px auto 5px; }
+    .draw-card { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; padding: 25px; border: 4px solid var(--ink); background: var(--yellow); box-shadow: 7px 7px 0 var(--ink); text-align: center; cursor: pointer; transform-style: preserve-3d; }
+    .draw-card.flipping { animation: flip .55s ease; }
+    @keyframes flip { 0% { transform: rotateY(0); } 45% { transform: rotateY(90deg) scale(.96); } 100% { transform: rotateY(0); } }
+    .draw-card .draw-icon { font-size: 3.8rem; }
+    .draw-card h3 { margin: 0; font-size: 1.45rem; line-height: 1.2; }
+    .draw-card p { margin: 0; font-size: .82rem; font-weight: 700; }
+    .draw-hint { margin: 12px 0 0; text-align: center; color: var(--muted); font-size: .75rem; font-weight: 800; }
+
+    @media (max-width: 900px) {
+      .nav { align-items: flex-start; }
+      .nav-right { max-width: 590px; }
+      .cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero-grid { grid-template-columns: 1fr .65fr; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 28px, 540px); }
+      .nav { min-height: 68px; align-items: center; flex-wrap: wrap; }
+      .brand { min-width: 0; }
+      .brand-mark { width: 39px; height: 39px; font-size: 1.3rem; }
+      .brand-name { font-size: .96rem; }
+      .menu-toggle { display: block; }
+      .nav-right { display: none; width: 100%; max-width: none; justify-content: stretch; padding: 5px 0 8px; }
+      .nav-right.open { display: flex; flex-direction: column; align-items: stretch; }
+      .nav-cats { display: grid; grid-template-columns: repeat(3,1fr); }
+      .nav-btn { padding: 8px 5px; }
+      .random-btn { width: 100%; }
+      .hero { padding-top: 38px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { min-height: 185px; max-width: 100%; }
+      .hero-emoji { font-size: 6rem; }
+      .alert { align-items: flex-start; padding: 13px; }
+      .alert-tag { font-size: .6rem; }
+      .toolbar { align-items: stretch; flex-direction: column; }
+      .search-box { max-width: none; }
+      .cards { grid-template-columns: 1fr; gap: 14px; }
+      .card { min-height: 220px; }
+      .submit-band { flex-direction: column; align-items: flex-start; padding: 20px; }
+      .footer-inner { flex-direction: column; }
+      .section-head { align-items: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip">UNOFFICIAL CAMPUS SURVIVAL GUIDE　✦　大學生活沒有攻略？這裡有。</div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="大學生生存圖鑑首頁">
+        <span class="brand-mark" aria-hidden="true">🛡️</span>
+        <span class="brand-name">大學生生存圖鑑<span class="brand-sub">COLLEGE SURVIVAL ENCYCLOPEDIA</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navRight">☰ MENU</button>
+      <div class="nav-right" id="navRight">
+        <nav class="nav-cats" aria-label="主要分類">
+          <button class="nav-btn active" data-category="全部">全部</button>
+          <button class="nav-btn" data-category="飲食避雷">飲食避雷</button>
+          <button class="nav-btn" data-category="學業求生">學業求生</button>
+          <button class="nav-btn" data-category="省錢秘技">省錢秘技</button>
+          <button class="nav-btn" data-category="校園隱藏版">校園隱藏版</button>
+        </nav>
+        <button class="random-btn" id="randomBtn">🎲 隨機抽一張求生卡</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-kicker">PLAYER 001 ／ CAMPUS EDITION</span>
+          <h1 id="heroTitle">大學四年，<br><span class="highlight">活著畢業</span>就是勝利。</h1>
+          <p class="hero-copy">大學不是冒險的終點，而是另一場生存遊戲的開始。從學餐地雷到期末求生，這裡收錄學長姐用血淚換來的情報。<strong>先看攻略，再進副本。</strong></p>
+          <div class="hero-stats">
+            <span class="stat">📍 初始地圖：<b>成功大學</b></span>
+            <span class="stat">📚 情報類型：<b>生活 × 學業</b></span>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="像素風求生盾牌插圖">
+          <div class="hero-emoji" aria-hidden="true">🎒</div>
+          <span class="art-label">SURVIVAL KIT / LV.01</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="alert" aria-label="校園警報">
+      <div class="alert-left">
+        <span class="alert-icon" aria-hidden="true">🚨</span>
+        <div>
+          <h2>大學生生存警報！</h2>
+          <p>報告、考試、荷包與胃，都需要好好照顧。</p>
+        </div>
+      </div>
+      <span class="alert-tag">SYSTEM ALERT</span>
+    </section>
+
+    <section id="collection" aria-labelledby="collectionTitle">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">✦ FIELD NOTES / 001</span>
+          <h2 id="collectionTitle">今日求生情報</h2>
+          <p>挑一張卡片，看看學長姐留下了什麼情報。</p>
+        </div>
+        <span class="section-index">THE INDEX</span>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="搜尋：期中、宵夜、免費軟體、選課……" autocomplete="off">
+        </label>
+        <span class="result-count" id="resultCount" aria-live="polite">目前顯示 0 筆情報</span>
+      </div>
+
+      <div class="category-bar" aria-label="情報分類篩選">
+        <button class="category-chip active" data-category="全部">✦ 全部情報</button>
+        <button class="category-chip" data-category="飲食避雷">🍜 飲食避雷</button>
+        <button class="category-chip" data-category="學業求生">📚 學業求生</button>
+        <button class="category-chip" data-category="省錢秘技">💰 省錢秘技</button>
+        <button class="category-chip" data-category="校園隱藏版">🗺️ 校園隱藏版</button>
+      </div>
+
+      <div class="cards" id="cards" aria-live="polite"></div>
+    </section>
+
+    <section class="submit-band">
+      <div>
+        <span class="eyebrow">YOUR INTEL MATTERS</span>
+        <h2>你也有私藏的生存情報？</h2>
+        <p>把踩雷經驗、隱藏美食或校園秘境分享給下一位玩家。</p>
+      </div>
+      <a class="primary-btn" id="submitLink" href="#投稿連結待設定">✍️ 我要投稿情報 ↗</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-title">🛡️ 大學生生存圖鑑</div>
+          <p class="disclaimer">本指南純屬經驗分享，被當概不負責。</p>
+          <p class="disclaimer">情報以學長姐經驗為主，請依實際情況判斷與查證。</p>
+        </div>
+        <div class="footer-links">
+          <a id="footerSubmit" href="#投稿連結待設定">投稿表單</a>
+          <a id="githubLink" href="#GitHub連結待設定">GitHub 倉庫</a>
+        </div>
+      </div>
+      <div class="copyright">© <span id="year"></span> COLLEGE SURVIVAL ENCYCLOPEDIA · MADE FOR CAMPUS LIFE</div>
+    </div>
+  </footer>
+
+  <!-- Article modal -->
+  <div class="modal-backdrop" id="articleBackdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <span class="category-label" id="modalCategory"></span>
+          <h2 id="modalTitle"></h2>
+        </div>
+        <button class="close-btn" id="closeArticle" aria-label="關閉文章">×</button>
+      </div>
+      <div class="modal-ratings" id="modalRatings"></div>
+      <div class="modal-content" id="modalContent"></div>
+      <div class="tag-list" id="modalTags"></div>
+      <div class="modal-author" id="modalAuthor"></div>
+    </section>
+  </div>
+
+  <!-- Random draw modal -->
+  <div class="modal-backdrop" id="drawBackdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="drawTitle">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">✦ RANDOM SURVIVAL DRAW</span>
+          <h2 id="drawTitle">命運替你抽了一張卡</h2>
+        </div>
+        <button class="close-btn" id="closeDraw" aria-label="關閉抽卡視窗">×</button>
+      </div>
+      <div class="draw-card-wrap">
+        <button class="draw-card" id="drawCard" type="button" aria-label="點擊查看抽中的求生情報">
+          <span class="draw-icon" id="drawIcon">🎴</span>
+          <span class="category-label" id="drawCategory">求生情報</span>
+          <h3 id="drawCardTitle">卡片準備中</h3>
+          <p id="drawSummary">點擊卡片，查看完整攻略。</p>
+          <span class="pixel" style="font-size:.68rem;font-weight:900">TAP TO REVEAL ↗</span>
+        </button>
+      </div>
+      <p class="draw-hint">抽到不代表命運安排，但可能真的用得到。</p>
+    </section>
+  </div>
+
+  <script>
+    /*
+      大學生生存圖鑑｜資料設定區
+      1. 新增文章：在 survivalData 陣列中新增一筆物件。
+      2. category 請使用：飲食避雷、學業求生、省錢秘技、校園隱藏版。
+      3. dangerRating / usefulnessRating 請填入 1～5 的整數。
+      4. 正式上線前，請將 CONFIG 中的投稿表單與 GitHub 網址換成實際網址。
+    */
+
+    const CONFIG = {
+      submissionUrl: "", // 例：https://forms.gle/你的表單代碼
+      githubUrl: ""       // 例：https://github.com/你的帳號/你的專案
+    };
+
+    // 以下為展示用範例資料，正式使用前請依實際訪查與學長姐投稿內容更新。
+    const survivalData = [
+      {
+        id: "food-001", school: "成功大學", category: "飲食避雷",
+        title: "學餐踩雷地圖", summary: "不是每間便宜的店，都值得用午休時間冒險。",
+        dangerRating: 4, usefulnessRating: 5,
+        tags: ["學餐", "飲食", "避雷", "午餐"],
+        content: "【情報摘要】\\n這張卡是學餐踩雷情報的整理範例。正式內容可放入實際店家、餐點、價格區間、排隊時間，以及學長姐的用餐心得。\\n\\n【出發前提醒】\\n建議標示情報更新日期，餐點、價格與營業時間可能隨時變動，出發前仍要確認店家現況。",
+        author: "成大／匿名學長姐", icon: "🍜"
+      },
+      {
+        id: "study-001", school: "成功大學", category: "學業求生",
+        title: "教授語錄翻譯機", summary: "教授說「這個不難」的時候，先不要太早放心。",
+        dangerRating: 4, usefulnessRating: 5,
+        tags: ["教授", "考試", "上課", "期中"],
+        content: "【教授語錄】「這個觀念很基本。」\\n【學生腦內字幕】「基本到我可能忘記自己還沒學會。」\\n\\n【使用方式】\\n可以整理課堂常見語句、同學的理解，以及實際課程情境。不同教授與課程的意思可能不同，請以課堂公告及老師實際要求為準。",
+        author: "成大／匿名學長姐", icon: "📚"
+      },
+      {
+        id: "money-001", school: "成功大學", category: "省錢秘技",
+        title: "學生證隱藏優惠", summary: "學生證除了刷門禁，也可能是你的省錢道具。",
+        dangerRating: 1, usefulnessRating: 5,
+        tags: ["學生證", "優惠", "省錢", "折扣"],
+        content: "【情報摘要】\\n整理學生身分可能享有的軟體、交通、展覽、餐飲或其他優惠。\\n\\n【資料建議】\\n每筆優惠請附上適用對象、申請方式、有效期限及官方查詢來源。優惠規則可能變動，使用前請至官方網站確認。",
+        author: "成大／匿名學長姐", icon: "💳"
+      },
+      {
+        id: "campus-001", school: "成功大學", category: "校園隱藏版",
+        title: "校園自習秘境探索", summary: "圖書館以外，還有沒有適合安靜讀書的角落？",
+        dangerRating: 1, usefulnessRating: 4,
+        tags: ["自習", "校園空間", "讀書", "秘境"],
+        content: "【情報摘要】\\n這張卡可整理校園中適合讀書、休息或等待上課的空間。\\n\\n【投稿可以包含】\\n地點、開放時間、是否需要預約、插座與座位狀況，以及使用時需要注意的規範。請尊重校園空間管理規定。",
+        author: "成大／匿名學長姐", icon: "🗺️"
+      },
+      {
+        id: "food-002", school: "成功大學", category: "飲食避雷",
+        title: "凌晨三點宵夜地圖", summary: "夜深了，胃還醒著；先確認哪裡真的有開。",
+        dangerRating: 2, usefulnessRating: 5,
+        tags: ["宵夜", "凌晨", "美食", "營業時間"],
+        content: "【情報摘要】\\n整理深夜時段仍可能營業的餐飲選項。正式資料請記錄店家名稱、地址、營業時間、價位及最後確認日期。\\n\\n【重要提醒】\\n深夜營業時間可能因日期、節日或店家安排而調整，出發前請再次確認。",
+        author: "成大／匿名學長姐", icon: "🌙"
+      },
+      {
+        id: "study-002", school: "成功大學", category: "學業求生",
+        title: "期中末考抱佛腳攻略", summary: "時間不夠時，先整理範圍，再決定從哪裡開始讀。",
+        dangerRating: 5, usefulnessRating: 5,
+        tags: ["期中", "期末", "考試", "讀書"],
+        content: "【求生步驟】\\n1. 先確認考試範圍、題型及老師公告。\\n2. 整理課堂筆記、投影片與指定教材。\\n3. 優先處理自己最不熟悉、又屬於考試範圍的內容。\\n4. 留下時間練習題目與回顧錯誤。\\n\\n這是一份讀書規劃範例，實際準備方式仍應依課程內容與個人狀況調整。",
+        author: "成大／匿名學長姐", icon: "⏰"
+      },
+      {
+        id: "money-002", school: "成功大學", category: "省錢秘技",
+        title: "免費軟體資源庫", summary: "先找合法免費資源，別急著讓荷包大失血。",
+        dangerRating: 1, usefulnessRating: 5,
+        tags: ["免費軟體", "工具", "學生優惠", "資源"],
+        content: "【情報摘要】\\n整理學生可使用的免費或教育版軟體資源。\\n\\n【每筆資料建議包含】\\n軟體名稱、用途、適用資格、申請方式、官方連結及使用限制。請以軟體官方網站公布的授權與使用條款為準。",
+        author: "成大／匿名學長姐", icon: "💻"
+      },
+      {
+        id: "campus-002", school: "成功大學", category: "校園隱藏版",
+        title: "校園生活冷知識", summary: "那些不一定寫在新生手冊，卻可能很實用的小情報。",
+        dangerRating: 1, usefulnessRating: 4,
+        tags: ["校園", "新生", "生活資訊", "冷知識"],
+        content: "【情報摘要】\\n分享校園中不容易第一時間發現的實用資訊，例如設施位置、服務方式、校園活動或行政流程。\\n\\n請盡量附上官方資訊來源或最後確認日期，避免過期資訊造成困擾。",
+        author: "成大／匿名學長姐", icon: "🔎"
+      }
+    ];
+
+    const categoryIcons = {
+      "飲食避雷": "🍜", "學業求生": "📚", "省錢秘技": "💰", "校園隱藏版": "🗺️"
+    };
+    let currentCategory = "全部";
+    let currentDraw = null;
+    let lastFocusedElement = null;
+
+    const cardsEl = document.getElementById("cards");
+    const searchInput = document.getElementById("searchInput");
+    const resultCount = document.getElementById("resultCount");
+    const articleBackdrop = document.getElementById("articleBackdrop");
+    const drawBackdrop = document.getElementById("drawBackdrop");
+
+    function stars(value) {
+      const n = Math.max(1, Math.min(5, Number(value) || 1));
+      return "★".repeat(n) + "☆".repeat(5 - n);
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function getFilteredData() {
+      const keyword = searchInput.value.trim().toLocaleLowerCase();
+      return survivalData.filter(item => {
+        const categoryMatch = currentCategory === "全部" || item.category === currentCategory;
+        const searchable = [item.title, item.summary, item.content, ...(item.tags || [])].join(" ").toLocaleLowerCase();
+        return categoryMatch && (!keyword || searchable.includes(keyword));
+      });
+    }
+
+    function renderCards() {
+      const items = getFilteredData();
+      resultCount.textContent = `目前顯示 ${items.length} 筆情報`;
+      if (!items.length) {
+        cardsEl.innerHTML = `<div class="empty-state"><div class="big">🫥</div><h3>這張地圖還沒有情報</h3><p>換個關鍵字，或切換其他分類再找找看。</p></div>`;
+        return;
+      }
+      cardsEl.innerHTML = items.map(item => `
+        <button class="card" type="button" data-id="${escapeHTML(item.id)}" aria-label="查看${escapeHTML(item.title)}完整內容">
+          <span class="card-top">
+            <span class="category-label">${escapeHTML(item.category)}</span>
+            <span class="card-icon" aria-hidden="true">${escapeHTML(item.icon || categoryIcons[item.category] || "📌")}</span>
+          </span>
+          <span class="ratings">
+            <span class="rating-line"><span class="rating-name">危險程度</span><span class="stars" aria-label="${Number(item.dangerRating)}顆星">${stars(item.dangerRating)}</span></span>
+            <span class="rating-line"><span class="rating-name">實用程度</span><span class="stars" aria-label="${Number(item.usefulnessRating)}顆星">${stars(item.usefulnessRating)}</span></span>
+          </span>
+          <span><strong class="card-title" style="display:block;font-size:1.24rem;line-height:1.25;letter-spacing:-.04em;margin-bottom:7px">${escapeHTML(item.title)}</strong></span>
+          <span class="card-summary">${escapeHTML(item.summary)}</span>
+          <span class="card-bottom">
+            <span class="author">${escapeHTML(item.author || "成大／匿名學長姐")}</span>
+            <span class="read-more">OPEN FILE ↗</span>
+          </span>
+        </button>
+      `).join("");
+    }
+
+    function setCategory(category) {
+      currentCategory = category;
+      document.querySelectorAll("[data-category]").forEach(button => {
+        const active = button.dataset.category === category;
+        button.classList.toggle("active", active);
+        if (button.classList.contains("nav-btn")) button.setAttribute("aria-pressed", String(active));
+      });
+      renderCards();
+    }
+
+    function openArticle(item) {
+      if (!item) return;
+      lastFocusedElement = document.activeElement;
+      document.getElementById("modalCategory").textContent = item.category;
+      document.getElementById("modalTitle").textContent = item.title;
+      document.getElementById("modalRatings").innerHTML = `
+        <span>危險程度 <span class="stars">${stars(item.dangerRating)}</span></span>
+        <span>實用程度 <span class="stars">${stars(item.usefulnessRating)}</span></span>`;
+      document.getElementById("modalContent").textContent = item.content;
+      document.getElementById("modalTags").innerHTML = (item.tags || []).map(tag => `<span class="tag">#${escapeHTML(tag)}</span>`).join("");
+      document.getElementById("modalAuthor").textContent = `投稿來源：${item.author || "成大／匿名學長姐"}`;
+      articleBackdrop.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("closeArticle").focus();
+    }
+
+    function closeModal(backdrop) {
+      backdrop.classList.remove("open");
+      if (!articleBackdrop.classList.contains("open") && !drawBackdrop.classList.contains("open")) {
+        document.body.style.overflow = "";
+      }
+      if (lastFocusedElement && typeof lastFocusedElement.focus === "function") lastFocusedElement.focus();
+    }
+
+    function drawRandomCard() {
+      if (!survivalData.length) {
+        alert("目前還沒有可以抽取的求生情報！");
+        return;
+      }
+      currentDraw = survivalData[Math.floor(Math.random() * survivalData.length)];
+      lastFocusedElement = document.activeElement;
+      const card = document.getElementById("drawCard");
+      card.classList.remove("flipping");
+      void card.offsetWidth;
+      card.classList.add("flipping");
+      document.getElementById("drawIcon").textContent = currentDraw.icon || categoryIcons[currentDraw.category] || "🎴";
+      document.getElementById("drawCategory").textContent = currentDraw.category;
+      document.getElementById("drawCardTitle").textContent = currentDraw.title;
+      document.getElementById("drawSummary").textContent = currentDraw.summary;
+      drawBackdrop.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("closeDraw").focus();
+    }
+
+    document.addEventListener("click", event => {
+      const categoryButton = event.target.closest("[data-category]");
+      if (categoryButton) {
+        setCategory(categoryButton.dataset.category);
+        document.getElementById("navRight").classList.remove("open");
+        document.getElementById("menuToggle").setAttribute("aria-expanded", "false");
+      }
+      const card = event.target.closest(".card");
+      if (card) openArticle(survivalData.find(item => item.id === card.dataset.id));
+    });
+
+    searchInput.addEventListener("input", renderCards);
+    document.getElementById("randomBtn").addEventListener("click", drawRandomCard);
+    document.getElementById("drawCard").addEventListener("click", () => {
+      if (currentDraw) {
+        closeModal(drawBackdrop);
+        openArticle(currentDraw);
+      }
+    });
+    document.getElementById("closeArticle").addEventListener("click", () => closeModal(articleBackdrop));
+    document.getElementById("closeDraw").addEventListener("click", () => closeModal(drawBackdrop));
+    [articleBackdrop, drawBackdrop].forEach(backdrop => {
+      backdrop.addEventListener("click", event => {
+        if (event.target === backdrop) closeModal(backdrop);
+      });
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        if (articleBackdrop.classList.contains("open")) closeModal(articleBackdrop);
+        else if (drawBackdrop.classList.contains("open")) closeModal(drawBackdrop);
+      }
+    });
+
+    const menuToggle = document.getElementById("menuToggle");
+    menuToggle.addEventListener("click", () => {
+      const nav = document.getElementById("navRight");
+      const isOpen = nav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    function setOptionalLink(elementId, url, label) {
+      const element = document.getElementById(elementId);
+      if (url) {
+        element.href = url;
+        element.target = "_blank";
+        element.rel = "noopener noreferrer";
+      } else {
+        element.href = "#";
+        element.addEventListener("click", event => {
+          event.preventDefault();
+          alert(`尚未設定${label}。請在 HTML 的 CONFIG 區填入實際網址。`);
+        });
+      }
+    }
+    setOptionalLink("submitLink", CONFIG.submissionUrl, "投稿表單連結");
+    setOptionalLink("footerSubmit", CONFIG.submissionUrl, "投稿表單連結");
+    setOptionalLink("githubLink", CONFIG.githubUrl, "GitHub 倉庫連結");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderCards();
+  </script>
+</body>
+</html>
